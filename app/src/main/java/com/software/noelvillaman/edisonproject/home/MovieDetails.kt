@@ -24,8 +24,6 @@ class MovieDetails : AppCompatActivity() {
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = movieObject.title
 
         getObjecInfo(movieObject)
-
-        arrageDate("2011-04-21")
     }
 
     private fun getObjecInfo(result : Results){
