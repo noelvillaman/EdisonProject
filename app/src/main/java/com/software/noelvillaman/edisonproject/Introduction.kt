@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.software.noelvillaman.edisonproject.home.MainActivity
+import com.software.noelvillaman.edisonproject.utils.MovieEngine
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -87,6 +88,7 @@ class Introduction : AppCompatActivity() {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
+        showMainContent()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -142,5 +144,16 @@ class Introduction : AppCompatActivity() {
         private const val AUTO_HIDE = true
         private const val AUTO_HIDE_DELAY_MILLIS = 3000
         private const val UI_ANIMATION_DELAY = 300
+    }
+
+    private fun showMainContent(){
+
+        Handler().postDelayed(object : Thread() {
+            override fun run() {
+                val presentacion = Intent(this@Introduction, MainActivity::class.java)
+                startActivity(presentacion)
+                this@Introduction.finish()
+            }
+        }, MovieEngine.SECOND_GO_MAIN_ACTIVITY)
     }
 }
