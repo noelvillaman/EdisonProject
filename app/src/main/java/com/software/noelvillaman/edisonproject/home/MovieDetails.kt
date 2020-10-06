@@ -36,7 +36,6 @@ class MovieDetails : AppCompatActivity() {
                 it
             )
         }}"
-        Picasso.get().load("https://image.tmdb.org/t/p/original/${result.poster_path}").into(details_top_image)
         result.genre_ids?.get(0)
     }
 
