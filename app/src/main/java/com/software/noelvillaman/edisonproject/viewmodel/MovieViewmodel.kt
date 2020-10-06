@@ -6,9 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.software.noelvillaman.edisonproject.model.MovieModel
 import com.software.noelvillaman.edisonproject.networking.MovieApi
+import okhttp3.internal.http2.Http2Reader.Companion.logger
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.logging.Logger
 
 class MovieViewmodel :  ViewModel() {
     val movies = MutableLiveData<MovieModel>()
@@ -41,7 +45,6 @@ class MovieViewmodel :  ViewModel() {
             ) {
                 movieLoadError.value = false
                 movies.value = response.body()
-                ponerDatasIncio(response.body())
                 loading.value = false
                 movieCall = null
             }
@@ -55,30 +58,6 @@ class MovieViewmodel :  ViewModel() {
         })
     }
 
-    private fun getmoviesInfoList() : List<MovieModel>{
-//        val teamsInfoList = ArrayList<MovieViewmodel>()
-//        for (team in getData()?.moviesDao()?.sacarTodosmovies()!!){
-//            teamsInfoList.add(MovieViewmodel(team.temaId, team.libroTitulo, team.libroCategoria, team.libroTema, team.libroCapitulos, team.libroMes))
-//        }
-//        loading.value = false
-//        moviewLoadError.value = false
-//        return teamsInfoList
-        return ArrayList<MovieModel>()
-    }
-
-    private fun ponerDatasIncio(body: MovieModel?) {
-//        if (getData()?.moviesDao()?.sacarTodosmovies()?.size == 0) {
-//            val moviesList = ArrayList<MovieModel>()
-//            if (body != null) {
-//                for (tema in body) {
-//                }
-//            }
-//            //getData()?.moviesDao()?.insertarListamovies(moviesList)
-//        }
-    }
-
-
-
     override fun onCleared() {
         if (movieCall != null){
             movieCall!!.cancel()
@@ -88,5 +67,14 @@ class MovieViewmodel :  ViewModel() {
 
     override fun toString(): String {
         return "moviesViewmodel(movies=$movies, loading=$loading, moviewLoadError=$movieLoadError)"
+    }
+
+    private fun arrayValues(requestJSONObject: JSONObject){
+        val item3Holder = requestJSONObject.getJSONObject("genres_value")
+        val ids = item3Holder.getJSONArray("id");
+        for (id in 0..ids.length()){
+            val id = id.toString()
+            Log.d("IDSNUMBER", id)
+        }
     }
 }

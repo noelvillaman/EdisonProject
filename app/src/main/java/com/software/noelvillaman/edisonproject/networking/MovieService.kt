@@ -2,6 +2,7 @@ package com.software.noelvillaman.edisonproject.networking
 
 import com.software.noelvillaman.edisonproject.model.MovieModel
 import com.software.noelvillaman.edisonproject.model.Results
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -9,7 +10,7 @@ import retrofit2.http.Query
 interface MovieService {
 
     @get:GET("4/list/5?api_key=1ba8650f51425ddd9c39de29db214b6a")
-    val listOfMovie : Call<List<MovieModel>>
+    val listOfMovie : Call<ResponseBody>
     /*4/list/5?page=1&api_key=1ba8650f51425ddd9c39de29db214b6a*/
     @GET("4/list/5")
     fun getMovieList(@Query("api_key") api_key: String?) : Call<MovieModel>?
