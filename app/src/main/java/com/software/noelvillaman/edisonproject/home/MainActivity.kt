@@ -39,8 +39,6 @@ class MainActivity : AppCompatActivity(), MovieSelectedListener {
         movie_container?.adapter = MovieListResultAdapter(this, resultViewmodel!!, this, this)
         movie_container?.layoutManager = LinearLayoutManager(this)
         observeResultViemodel()
-
-        fetchMovies()
     }
 
     private fun observeResultViemodel(){
@@ -81,33 +79,4 @@ class MainActivity : AppCompatActivity(), MovieSelectedListener {
         selectedResult.setSelectedMovie(result)
     }
 
-    private fun fetchMovies(){
-        val movieCall = MovieApi.instance.listOfMovie
-        movieCall?.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
-                val json = JSONObject(response.body()!!.string())
-                val item3Holder: JSONObject = json.getJSONObject("item3Holder")
-                val ids = item3Holder.getJSONArray("id")
-                for (i in 0 until ids.length()) {
-                    val id = ids.getString(i).toString()
-                    Log.d("IDS", id)
-                    Toast.makeText(this@MainActivity, "$id", Toast.LENGTH_LONG).show()
-                }
-                //Toast.makeText(this@MainActivity, "$json", Toast.LENGTH_LONG).show()
-
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.e(javaClass.simpleName, "Error fetching movies ${t.message}", t)
-                Toast.makeText(
-                    this@MainActivity,
-                    "Error fetching movies ${t.message}",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        })
-    }
 }

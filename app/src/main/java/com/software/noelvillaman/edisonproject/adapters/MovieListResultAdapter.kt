@@ -51,13 +51,14 @@ lifecycleOwner: LifecycleOwner, private val movieSelectedListener: MovieSelected
         val myObject = resultData[position]
 
         holder.itemView.setOnClickListener({
-            showDetailsActivity(myObject)
+            showDetailsActivity(myObject, position)
         })
     }
 
-    private fun showDetailsActivity(movie : Results){
+    private fun showDetailsActivity(movie : Results, position: Int){
         val intent = Intent(mContext, MovieDetails::class.java)
         intent.putExtra("movie", movie)
+        intent.putExtra("position", position)
         mContext.startActivity(intent)
     }
 
